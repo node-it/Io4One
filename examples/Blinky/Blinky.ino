@@ -49,7 +49,7 @@ void setup() {
 }
 
 void loop() {
-  static pin = 0;
+  static uint8_t pin = 0;
   
   // Simply toggle one output pin.
   Io4One.digitalWrite(pin, LOW);

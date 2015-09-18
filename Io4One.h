@@ -27,6 +27,8 @@
 #define NORMAL                          0
 #define INVERTED                        1
 
+typedef void (*IoInterrupt)(void);
+
 class Io4OneClass
 {
 protected:
@@ -40,6 +42,9 @@ protected:
   boolean pinPolarity(uint8_t pin, uint8_t polarity);
   boolean digitalWrite(uint8_t pin, boolean val);
   boolean digitalRead(uint8_t pin);
+  void registerInterrupt(IoInterrupt ioInt);
+  void registerInterrupt(IoInterrupt ioInt, int mode);
+  void unregisterInterrupt();
 
  private:
   uint8_t m_inp;

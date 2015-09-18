@@ -27,9 +27,13 @@
 #define PCA9537_REG_INP                 0
 #define PCA9537_REG_OUT                 1
 #define PCA9537_REG_POL                 2
-#define PCA9537_REG_CTRL                3  
+#define PCA9537_REG_CTRL                3
+
+#define INT_PIN                         13
 
 uint8_t pinNum2bitNum[] = { 0x01, 0x02, 0x04, 0x08 };
+
+extern void attachInterrupt(uint8_t pin, IoInterrupt handler, int mode);
 
 /***************************************************************************
  *
@@ -181,5 +185,48 @@ boolean Io4OneClass::digitalRead(uint8_t pin)
   return (readRegister(PCA9537_ADDRESS, PCA9537_REG_INP) & pinNum2bitNum[pin] != 0);
 }
 
+/***************************************************************************
+ *
+ * Attach an interrupt to the interrupt pin.
+ *
+ * The interrupts works as following (from the data sheet)
+ * The open-drain interrupt output is activated when one of the port
+ * pins changes state and the pin is configured as an input. The interrupt
+ * is de-activated when the input returns to its previous state or the 
+ * Input Port register is read. Note that changing an I/O from an output
+ * to an input may cause a false interrupt to occur if the state of the
+ * pin does not match the contents of the Input Port register.
+ *
+ * The Io4One module connects the INT# output from the PCA9537 device
+ * to GPIO13, when the solder jumper on the board is closed.
+ *
+ **************************************************************************/
+void Io4OneClass::registerInterrupt(IoInterrupt ioInt, int mode)
+{
+  pinMode(INT_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(INT_PIN), ioInt, mode);
+}
+
+/***************************************************************************
+ *
+ * Attach an interrupt to the interrupt pin using falling edge triggering.
+ *
+ **************************************************************************/
+void Io4OneClass::registerInterrupt(IoInterrupt ioInt)
+{
+  attachInterrupt(digitalPinToInterrupt(INT_PIN), ioInt, FALLING);
+}
+
+/***************************************************************************
+ *
+ * Attach an interrupt to the interrupt pin.
+ *
+ **************************************************************************/
+void Io4OneClass::unregisterInterrupt()
+{
+  detachInterrupt(INT_PIN);
+}
+
+// Define a handle to the global object instance
 Io4OneClass Io4One;
 
