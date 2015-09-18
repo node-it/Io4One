@@ -1,0 +1,31 @@
+#######################################
+# Syntax Coloring Map For Ethernet
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Io4OneClass	KEYWORD1
+IoInterrupt	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+Io4One		KEYWORD2
+begin	KEYWORD2
+pinMode	KEYWORD2
+pinPolarity	KEYWORD2
+digitalWrite	KEYWORD2
+digitalRead	KEYWORD2
+registerInterrupt	KEYWORD2
+unRegisterInterrupt	KEYWORD2
+
+#######################################
+# Constants (LITERAL2)
+#######################################
+
+NORMAL		LITERAL2
+INVERTED	LITERAL2
+
